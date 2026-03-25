@@ -3,109 +3,218 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Malwinizer - Welsh Translator</title>
+    <title>Malwinizer - ARC2 Edition</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 20px; background: #d30731; color: white; text-align: center; }
-        .container { max-width: 500px; margin: 0 auto; background: rgba(0,0,0,0.1); padding: 20px; border-radius: 15px; }
-        textarea { width: 90%; height: 100px; margin-bottom: 10px; border-radius: 8px; border: 2px solid #00ad36; padding: 10px; font-size: 16px; }
-        button { background: #00ad36; color: white; border: none; padding: 15px 30px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 18px; width: 95%; margin-bottom: 10px; }
-        button:active { background: #008a2b; }
-        .result-box { margin-top: 20px; background: white; color: black; padding: 15px; border-radius: 8px; min-height: 50px; text-align: left; word-wrap: break-word; }
-        .wa-btn { background: #25D366; }
+        /* ARC Teamkleuren: Marineblauw met witte streep */
+        body { 
+            font-family: 'Courier New', Courier, monospace; /* Geeft een beetje een 'rauw' tour-gevoel */
+            padding: 0; 
+            margin: 0; 
+            /* Marineblauwe achtergrond met een brede horizontale witte streep */
+            background-color: #000040; 
+            background-image: linear-gradient(0deg, #000040 0%, #000040 40%, #ffffff 40%, #ffffff 60%, #000040 60%, #000040 100%);
+            background-size: cover;
+            color: #ffffff; 
+            text-align: center; 
+            min-height: 100vh;
+        }
+
+        .main-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .box { 
+            max-width: 450px; 
+            width: 100%;
+            background: rgba(0, 0, 0, 0.85); /* Donkere box zodat text leesbaar is over de streep */
+            padding: 30px; 
+            border-radius: 10px; 
+            border: 3px solid #ffffff; /* Witte rand voor contrast */
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        }
+
+        h1 { font-size: 2.2em; margin-bottom: 5px; color: #ffffff; text-transform: uppercase; }
+        p.subtitle { margin-top: 0; color: #aaaaaa; font-style: italic; }
+
+        textarea { 
+            width: 100%; 
+            height: 100px; 
+            margin: 15px 0; 
+            border-radius: 5px; 
+            border: 2px solid #ffffff; 
+            padding: 12px; 
+            box-sizing: border-box; 
+            font-size: 16px; 
+            background-color: #111;
+            color: #fff;
+        }
+
+        button { 
+            color: white; 
+            border: none; 
+            padding: 15px; 
+            width: 100%; 
+            border-radius: 5px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            margin-top: 10px; 
+            font-size: 18px; 
+            text-transform: uppercase;
+            transition: background 0.2s;
+        }
+
+        /* Welsh Groen voor de vertaal knop */
+        .btn-translate { background-color: #00ad36; }
+        .btn-translate:hover { background-color: #008a2b; }
+
+        /* WhatsApp Groen */
+        .btn-whatsapp { background-color: #25D366; margin-top: 15px; }
+        .btn-whatsapp:hover { background-color: #1da851; }
+
+        #output { 
+            margin-top: 25px; 
+            background: #ffffff; 
+            color: #000000; 
+            padding: 20px; 
+            border-radius: 5px; 
+            text-align: left; 
+            min-height: 50px; 
+            font-weight: bold; 
+            font-size: 1.1em;
+            word-wrap: break-word;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>🏴󠁧󠁢󠁷󠁬󠁳󠁿 Malwinizer</h1>
-        <p>Maak je tekst "Proper Welsh", isn't it?</p>
-        <textarea id="inputField" placeholder="Typ je tekst hier..."></textarea>
-        <br>
-        <button onclick="welshifyText()">Maak het Plat Welsh</button>
-        <button class="wa-btn" onclick="shareWhatsApp()">Deel in de Groep</button>
-        
-        <div class="result-box" id="outputField">Resultaat verschijnt hier...</div>
+
+    <div class="main-container">
+        <div class="box">
+            <h1>🏴󠁧󠁢󠁷󠁬󠁳󠁿 Malwinizer</h1>
+            <p class="subtitle">ARC2 Tour & Banter Translator</p>
+            
+            <textarea id="input" placeholder="Typ je roast in het Nederlands... (bijv: De coach is een lul en Wales is kut)"></textarea>
+
+            <button class="btn-translate" onclick="startVertaalMachine()">Maak het Plat Welsh</button>
+            <button class="btn-whatsapp" onclick="shareWhatsApp()">Deel in ARC2 Groep</button>
+
+            <div id="output">Resultaat verschijnt hier, boyo...</div>
+        </div>
     </div>
 
     <script>
-    function startVertaalMachine() {
-        const inputElement = document.getElementById('input');
-        const outputElement = document.getElementById('output');
-        
-        let text = inputElement.value.toLowerCase();
-        if (!text) return;
+        function startVertaalMachine() {
+            const inputElement = document.getElementById('input');
+            const outputElement = document.getElementById('output');
+            
+            let text = inputElement.value.toLowerCase();
+            if (!text) {
+                outputElement.innerText = "Typ eerst wat, daft ap!";
+                return;
+            }
 
-        // Uitgebreide Nederlands/Engels naar Welsh Dictionary
-        const dict = {
-            // Begroetingen & Personen
-            "hallo": "alright butt",
-            "hey": "alright mush",
-            "morgen": "bore da, boyo",
-            "vriend": "butt",
-            "maat": "boyo",
-            "gast": "mush",
-            "kerel": "fella",
-            "team": "the boys",
-            "vrouw": "missus",
+            // --- DE ULTIEME ARC2 BANTER DICTIONARY ---
+            const dict = {
+                // Begroetingen & Personen
+                "hallo": "alright butt",
+                "hey": "alright mush",
+                "vriend": "mush",
+                "maat": "boyo",
+                "gast": "fella",
+                "vrouw": "gaffer",
+                "huwelijk": "the proper ball and chain (tidy)",
 
-            // Adjectieven (De 'Lush' factor)
-            "lekker": "proper lush",
-            "mooi": "tidy",
-            "goed": "ace",
-            "geweldig": "mint",
-            "slecht": "stinkin'",
-            "vies": "ych a fi",
-            "heet": "boiling, mun",
-            "koud": "freezing, isn't it",
+                // Fysiek (Het feit dat hij niet lang is)
+                "klein": "vertically challenged, fairplay",
+                "niet lang": "got his feet very close to the grass, mun",
+                "lang": "tall for a leprechaun",
 
-            // Rugby & Bier
-            "bier": "pints",
-            "pils": "Brains",
-            "zuipen": "on the lash",
-            "rugby": "the real game",
-            "scheids": "blind ref",
-            "bal": "egg",
-            "proost": "iechyd da!",
+                // Wales & Six Nations Drama (Dramatische prestaties)
+                "wales": "land of my fathers (stinkin' at rugby now)",
+                "six nations": "the annual spoon contention",
+                "winnen": "a rare occurrence, fairplay",
+                "verliezen": "standard procedure",
+                "gatland": "the magician who ran out of magic",
+                "schaap": "the proper welsh girlfriend",
 
-            // Werkwoorden & Zinnen
-            "gaan": "heading down",
-            "kijken": "have a look-see",
-            "wachten": "hang on a minute",
-            "nu": "now in a minute",
-            "ja": "aye",
-            "nee": "no way, mun",
-            "bedankt": "diolch, butt",
-            "doei": "ta-ra then"
-        };
+                // Rugby Algemeen
+                "rugby": "the real game (not that football soft nonsense)",
+                "bal": "egg",
+                "try": "meat pie cwtch",
+                "scrum": "cuddle puddle",
+                "scheids": "blind bloke with a whistle",
+                "penalty": "classic ref mistake",
 
-        // Loop door de woordenlijst
-        for (let [key, val] of Object.entries(dict)) {
-            let re = new RegExp("\\b" + key + "\\b", "gi");
-            text = text.replace(re, val);
+                // ARC2 Specifiek (Management team placeholders)
+                "management": "the spreadsheet dictators",
+                "coach": "the tactical dinosaur",
+                "captain": "glorious leader (stuffed)",
+                "teammanager": "bloke who forgets the waterbottles",
+                "arc2": "the finest drinking team with a rugby problem",
+                "training": "light jogging between pints",
+
+                // Mannenhumor & Drank
+                "bier": "pints of Brains SA",
+                "zuipen": "heading on a massive lash session",
+                "dronken": "plastered, tidy mun",
+                "kater": "feeling proper ych a fi",
+                "proost": "iechyd da!",
+                "lekker": "proper lush",
+                "mooi": "tidy",
+                "slecht": "stinkin'",
+                "lul": "daft ap",
+                "idioot": "mush without a brain",
+                "kut": "stinkin', isn't it",
+
+                // Woke & Samenleving (Zonder anti-diversiteit te zijn)
+                "woke": "the modern nonsense, boyo",
+                "politiek correct": "safe spaces everywhere, mun",
+                "mag niet meer": "cancel culture ych a fi",
+                "diversiteit": "everyone's ace, simple as", // Houdt het netjes
+
+                // Algemene zinnen
+                "ja": "aye",
+                "nee": "no way, mun",
+                "bedankt": "diolch, butt",
+                "doei": "ta-ra then"
+            };
+
+            // Loop door de woordenlijst
+            // Let op: We moeten langere zinnen eerst doen (zoals 'niet lang' voor 'lang')
+            // Maar de regex \b lost dit meeste al op.
+            for (let [key, val] of Object.entries(dict)) {
+                let re = new RegExp("\\b" + key + "\\b", "gi");
+                text = text.replace(re, val);
+            }
+
+            // De Welsh Finishers (Variatie maakt het leuker)
+            const finishers = [
+                ", isn't it, boyo?",
+                ", fairplay.",
+                ", to be honest with you, mun.",
+                ", simple as.",
+                ", ych a fi.",
+                ", you know what I mean, mush?",
+                ", proper lush."
+            ];
+            const randomFinish = finishers[Math.floor(Math.random() * finishers.length)];
+
+            // Het Resultaat
+            const finalResult = text.charAt(0).toUpperCase() + text.slice(1) + randomFinish;
+            outputElement.innerText = finalResult;
         }
 
-        // De Welsh "finish" (voegt altijd een typische afsluiter toe)
-        const finishers = [
-            ", isn't it, boyo?",
-            ", fairplay.",
-            ", simple as.",
-            ", to be honest with you.",
-            ", you know what I mean, mush?"
-        ];
-        const randomFinish = finishers[Math.floor(Math.random() * finishers.length)];
-
-        // Resultaat tonen (Eerste letter hoofdletter)
-        const finalResult = text.charAt(0).toUpperCase() + text.slice(1) + randomFinish;
-        outputElement.innerText = finalResult;
-    }
-
-    function shareWhatsApp() {
-        const text = document.getElementById('output').innerText;
-        if (text && text !== "Resultaat verschijnt hier...") {
-            // Opent WhatsApp met de gegenereerde tekst
-            const url = "https://wa.me/?text=" + encodeURIComponent(text);
-            window.open(url, '_blank');
+        function shareWhatsApp() {
+            const text = document.getElementById('output').innerText;
+            if (text && text !== "Resultaat verschijnt hier, boyo...") {
+                const url = "https://wa.me/?text=" + encodeURIComponent(text);
+                window.open(url, '_blank');
+            }
         }
-    }
-</script>
+    </script>
+
 </body>
 </html>
