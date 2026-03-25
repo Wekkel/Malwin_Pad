@@ -27,54 +27,85 @@
     </div>
 
     <script>
-        const dictionary = {
-            "hello": "alright butt",
-            "friend": "mush",
-            "mate": "boyo",
-            "good": "tidy",
-            "very good": "proper lush",
-            "nice": "lush",
-            "great": "ace",
-            "idiot": "daft ap",
-            "disgusting": "ych a fi",
-            "now": "now in a minute",
-            "yes": "aye",
-            "beer": "pints",
+    function startVertaalMachine() {
+        const inputElement = document.getElementById('input');
+        const outputElement = document.getElementById('output');
+        
+        let text = inputElement.value.toLowerCase();
+        if (!text) return;
+
+        // Uitgebreide Nederlands/Engels naar Welsh Dictionary
+        const dict = {
+            // Begroetingen & Personen
             "hallo": "alright butt",
-            "vriend": "boyo",
+            "hey": "alright mush",
+            "morgen": "bore da, boyo",
+            "vriend": "butt",
+            "maat": "boyo",
+            "gast": "mush",
+            "kerel": "fella",
+            "team": "the boys",
+            "vrouw": "missus",
+
+            // Adjectieven (De 'Lush' factor)
             "lekker": "proper lush",
+            "mooi": "tidy",
+            "goed": "ace",
+            "geweldig": "mint",
+            "slecht": "stinkin'",
+            "vies": "ych a fi",
+            "heet": "boiling, mun",
+            "koud": "freezing, isn't it",
+
+            // Rugby & Bier
             "bier": "pints",
-            "bedankt": "diolch, butt"
+            "pils": "Brains",
+            "zuipen": "on the lash",
+            "rugby": "the real game",
+            "scheids": "blind ref",
+            "bal": "egg",
+            "proost": "iechyd da!",
+
+            // Werkwoorden & Zinnen
+            "gaan": "heading down",
+            "kijken": "have a look-see",
+            "wachten": "hang on a minute",
+            "nu": "now in a minute",
+            "ja": "aye",
+            "nee": "no way, mun",
+            "bedankt": "diolch, butt",
+            "doei": "ta-ra then"
         };
 
-        function welshifyText() {
-            let text = document.getElementById('inputField').value.toLowerCase();
-            
-            if (!text) {
-                document.getElementById('outputField').innerText = "Typ eerst wat, boyo!";
-                return;
-            }
-
-            // Vervang woorden op basis van de dictionary
-            for (const [key, value] of Object.entries(dictionary)) {
-                // Gebruik RegExp met \b voor hele woorden om foutieve vervangingen te voorkomen
-                let re = new RegExp("\\b" + key + "\\b", "gi");
-                text = text.replace(re, value);
-            }
-
-            // Voeg de verplichte Welsh afsluiting toe
-            text = text.charAt(0).toUpperCase() + text.slice(1) + ", isn't it, boyo?";
-            
-            document.getElementById('outputField').innerText = text;
+        // Loop door de woordenlijst
+        for (let [key, val] of Object.entries(dict)) {
+            let re = new RegExp("\\b" + key + "\\b", "gi");
+            text = text.replace(re, val);
         }
 
-        function shareWhatsApp() {
-            const text = document.getElementById('outputField').innerText;
-            if (text && text !== "Resultaat verschijnt hier...") {
-                const url = "https://wa.me/?text=" + encodeURIComponent(text);
-                window.open(url, '_blank');
-            }
+        // De Welsh "finish" (voegt altijd een typische afsluiter toe)
+        const finishers = [
+            ", isn't it, boyo?",
+            ", fairplay.",
+            ", simple as.",
+            ", to be honest with you.",
+            ", you know what I mean, mush?"
+        ];
+        const randomFinish = finishers[Math.floor(Math.random() * finishers.length)];
+
+        // Resultaat tonen (Eerste letter hoofdletter)
+        const finalResult = text.charAt(0).toUpperCase() + text.slice(1) + randomFinish;
+        outputElement.innerText = finalResult;
+    }
+
+    function shareWhatsApp() {
+        const text = document.getElementById('output').innerText;
+        if (text && text !== "Resultaat verschijnt hier...") {
+            // Opent WhatsApp met de gegenereerde tekst
+            const url = "https://wa.me/?text=" + encodeURIComponent(text);
+            window.open(url, '_blank');
         }
-    </script>
+    }
+</script>
 </body>
 </html>
