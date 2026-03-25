@@ -3,89 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Malwinizer - ARC2 Edition</title>
+    <title>MALWINIZER 3000 - ARC2</title>
     <style>
-        /* ARC Teamkleuren: Marineblauw met witte streep */
         body { 
-            font-family: 'Courier New', Courier, monospace; /* Geeft een beetje een 'rauw' tour-gevoel */
-            padding: 0; 
-            margin: 0; 
-            /* Marineblauwe achtergrond met een brede horizontale witte streep */
+            font-family: 'Arial Black', Gadget, sans-serif;
+            padding: 0; margin: 0; 
             background-color: #000040; 
-            background-image: linear-gradient(0deg, #000040 0%, #000040 40%, #ffffff 40%, #ffffff 60%, #000040 60%, #000040 100%);
-            background-size: cover;
-            color: #ffffff; 
-            text-align: center; 
-            min-height: 100vh;
+            background-image: linear-gradient(180deg, #000040 0%, #000040 45%, #ffffff 45%, #ffffff 55%, #000040 55%, #000040 100%);
+            background-attachment: fixed;
+            color: #ffffff; text-align: center; min-height: 100vh;
         }
-
-        .main-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
-
+        .main-container { display: flex; justify-content: center; padding: 20px; }
         .box { 
-            max-width: 450px; 
-            width: 100%;
-            background: rgba(0, 0, 0, 0.85); /* Donkere box zodat text leesbaar is over de streep */
-            padding: 30px; 
-            border-radius: 10px; 
-            border: 3px solid #ffffff; /* Witte rand voor contrast */
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            max-width: 600px; width: 100%;
+            background: rgba(0, 0, 0, 0.95); 
+            padding: 30px; border-radius: 5px; 
+            border: 4px solid #ffffff;
+            box-shadow: 0 0 50px rgba(0,0,0,1);
         }
-
-        h1 { font-size: 2.2em; margin-bottom: 5px; color: #ffffff; text-transform: uppercase; }
-        p.subtitle { margin-top: 0; color: #aaaaaa; font-style: italic; }
-
+        h1 { font-size: 3em; margin: 0; color: #ffffff; -webkit-text-stroke: 1px #00ad36; }
+        .tagline { color: #ffffff; font-weight: bold; margin-bottom: 20px; background: #00ad36; display: inline-block; padding: 5px 15px; }
         textarea { 
-            width: 100%; 
-            height: 100px; 
-            margin: 15px 0; 
-            border-radius: 5px; 
-            border: 2px solid #ffffff; 
-            padding: 12px; 
-            box-sizing: border-box; 
-            font-size: 16px; 
-            background-color: #111;
-            color: #fff;
+            width: 100%; height: 150px; 
+            margin: 10px 0; border: 2px solid #ffffff; 
+            padding: 15px; box-sizing: border-box; font-size: 18px; 
+            background-color: #000; color: #00ff00; font-family: monospace;
         }
-
         button { 
-            color: white; 
-            border: none; 
-            padding: 15px; 
-            width: 100%; 
-            border-radius: 5px; 
-            font-weight: bold; 
-            cursor: pointer; 
-            margin-top: 10px; 
-            font-size: 18px; 
+            color: white; border: none; padding: 20px; width: 100%; 
+            font-weight: bold; cursor: pointer; margin-top: 10px; font-size: 20px; 
             text-transform: uppercase;
-            transition: background 0.2s;
         }
-
-        /* Welsh Groen voor de vertaal knop */
-        .btn-translate { background-color: #00ad36; }
-        .btn-translate:hover { background-color: #008a2b; }
-
-        /* WhatsApp Groen */
-        .btn-whatsapp { background-color: #25D366; margin-top: 15px; }
-        .btn-whatsapp:hover { background-color: #1da851; }
-
+        .btn-translate { background-color: #d30731; }
+        .btn-whatsapp { background-color: #25D366; color: #000; }
         #output { 
-            margin-top: 25px; 
-            background: #ffffff; 
-            color: #000000; 
-            padding: 20px; 
-            border-radius: 5px; 
-            text-align: left; 
-            min-height: 50px; 
-            font-weight: bold; 
-            font-size: 1.1em;
-            word-wrap: break-word;
+            margin-top: 30px; background: #fff; color: #000; 
+            padding: 25px; border-radius: 0; text-align: left; 
+            min-height: 80px; font-weight: bold; font-size: 1.4em;
+            line-height: 1.3; border-left: 15px solid #d30731;
         }
     </style>
 </head>
@@ -93,128 +48,145 @@
 
     <div class="main-container">
         <div class="box">
-            <h1>🏴󠁧󠁢󠁷󠁬󠁳󠁿 Malwinizer</h1>
-            <p class="subtitle">ARC2 Tour & Banter Translator</p>
+            <h1>MALWINIZER</h1>
+            <div class="tagline">OFFICIAL ARC2 BANTER TOOL</div>
             
-            <textarea id="input" placeholder="Typ je roast in het Nederlands... (bijv: De coach is een lul en Wales is kut)"></textarea>
+            <textarea id="input" placeholder="Typ je NL/EN onzin hier..."></textarea>
 
-            <button class="btn-translate" onclick="startVertaalMachine()">Maak het Plat Welsh</button>
-            <button class="btn-whatsapp" onclick="shareWhatsApp()">Deel in ARC2 Groep</button>
+            <button class="btn-translate" onclick="malwinize()">MAAK HET ONVERSTAANBAAR</button>
+            <button class="btn-whatsapp" onclick="shareWhatsApp()">GOOI IN WHATSAPP</button>
 
-            <div id="output">Resultaat verschijnt hier, boyo...</div>
+            <div id="output">Wachtend op input van de boys...</div>
         </div>
     </div>
 
     <script>
-        function startVertaalMachine() {
-            const inputElement = document.getElementById('input');
-            const outputElement = document.getElementById('output');
-            
-            let text = inputElement.value.toLowerCase();
-            if (!text) {
-                outputElement.innerText = "Typ eerst wat, daft ap!";
-                return;
-            }
+        function malwinize() {
+            const input = document.getElementById('input').value;
+            if (!input) return;
 
-            // --- DE ULTIEME ARC2 BANTER DICTIONARY ---
+            let text = " " + input.toLowerCase() + " ";
+
             const dict = {
-                // Begroetingen & Personen
-                "hallo": "alright butt",
-                "hey": "alright mush",
-                "vriend": "mush",
-                "maat": "boyo",
-                "gast": "fella",
-                "vrouw": "gaffer",
-                "huwelijk": "the proper ball and chain (tidy)",
-
-                // Fysiek (Het feit dat hij niet lang is)
-                "klein": "vertically challenged, fairplay",
-                "niet lang": "got his feet very close to the grass, mun",
-                "lang": "tall for a leprechaun",
-
-                // Wales & Six Nations Drama (Dramatische prestaties)
-                "wales": "land of my fathers (stinkin' at rugby now)",
-                "six nations": "the annual spoon contention",
-                "winnen": "a rare occurrence, fairplay",
-                "verliezen": "standard procedure",
-                "gatland": "the magician who ran out of magic",
-                "schaap": "the proper welsh girlfriend",
-
-                // Rugby Algemeen
-                "rugby": "the real game (not that football soft nonsense)",
-                "bal": "egg",
-                "try": "meat pie cwtch",
-                "scrum": "cuddle puddle",
-                "scheids": "blind bloke with a whistle",
-                "penalty": "classic ref mistake",
-
-                // ARC2 Specifiek (Management team placeholders)
-                "management": "the spreadsheet dictators",
+                // --- MANAGEMENT & ORGANISATIE ---
+                "board": "the clipboard overlords",
+                "bestuur": "the blazer-wearing dictators",
+                "tc": "the theoretical experts",
+                "technische commissie": "the high council of excuses",
+                "match secretary": "the fixture wizard",
+                "wedstrijdsecretaris": "the man with the magic pen",
+                "team manager": "the kit-carrying legend",
+                "manager": "the spreadsheet gaffer",
                 "coach": "the tactical dinosaur",
-                "captain": "glorious leader (stuffed)",
-                "teammanager": "bloke who forgets the waterbottles",
-                "arc2": "the finest drinking team with a rugby problem",
-                "training": "light jogging between pints",
+                "trainer": "the whistle-blower",
 
-                // Mannenhumor & Drank
-                "bier": "pints of Brains SA",
-                "zuipen": "heading on a massive lash session",
-                "dronken": "plastered, tidy mun",
-                "kater": "feeling proper ych a fi",
-                "proost": "iechyd da!",
-                "lekker": "proper lush",
-                "mooi": "tidy",
-                "slecht": "stinkin'",
-                "lul": "daft ap",
-                "idioot": "mush without a brain",
-                "kut": "stinkin', isn't it",
+                // --- HET SPEL & VELD ---
+                "try": "five-point meat pie",
+                "opponent": "the poor sheep in jerseys",
+                "tegenstander": "victims-to-be, innit",
+                "game": "80 mins of chaos",
+                "wedstrijd": "the weekly struggle",
+                "match": "the grand clash",
+                "uitwedstrijd": "the long tour to the sticks",
+                "away game": "a safari in the valleys",
+                "thuiswedstrijd": "the back garden brawl",
+                "home game": "playing in the backyard, tidy",
+                "injury": "a bit of a dramatic niggle",
+                "blessure": "acting like a footballer, ych a fi",
+                "scrum": "the sweaty cuddle-puddle",
+                "line-out": "the jumpy-jumpy nonsense",
+                "referee": "blind bloke in neon",
+                "scheids": "steve wonder's cousin",
+                "ball": "the egg", "bal": "the egg",
 
-                // Woke & Samenleving (Zonder anti-diversiteit te zijn)
-                "woke": "the modern nonsense, boyo",
-                "politiek correct": "safe spaces everywhere, mun",
-                "mag niet meer": "cancel culture ych a fi",
-                "diversiteit": "everyone's ace, simple as", // Houdt het netjes
+                // --- DE PERSOON (MALWIN ROASTS) ---
+                "klein": "eye-level with the grass",
+                "short": "vertically challenged mush",
+                "length": "pocket-sized stature",
+                "lengte": "diminutive presence, fairplay",
+                "niet lang": "closer to the ground than most",
+                "groot": "massive (only in his mind)",
+                "woke": "that modern snowflake nonsense",
+                "politiek": "the liars in suits",
+                "society": "this soft-world mess",
+                "samenleving": "everyone being offended, innit",
+                "diversiteit": "all the boys included, simple as",
 
-                // Algemene zinnen
-                "ja": "aye",
-                "nee": "no way, mun",
-                "bedankt": "diolch, butt",
-                "doei": "ta-ra then"
+                // --- WALES & RUGBY TRAGEDIE ---
+                "wales": "the land of sheep and wooden spoons",
+                "welsh": "unintelligible gabbing",
+                "six nations": "the annual heart-break",
+                "world cup": "a distant dream, mun",
+                "gatland": "the man who lost the plot",
+                "win": "a rare bloody miracle",
+                "lose": "the standard welsh outcome",
+                "verliezen": "classic wales behavior",
+
+                // --- DRANK & HUMOR ---
+                "bier": "proper pints of Brains SA",
+                "beer": "liquid gold from the valleys",
+                "pils": "fizzy water for softies",
+                "zuipen": "getting absolutely plastered",
+                "drink": "having a tidy swig",
+                "drunk": "three sheets to the wind",
+                "dronken": "steaming, fairplay",
+                "lekker": "proper lush", "good": "tidy", "mooi": "mint",
+                "slecht": "stinkin'", "vies": "clart", "shit": "ych a fi",
+
+                // --- FONETISCHE VERBASTERINGEN (NL/EN) ---
+                "ik": "ma-self", "i": "i-ya",
+                "jij": "ew", "you": "ewr-self",
+                "hij": "that boyo", "he": "that mush",
+                "wij": "the boys", "we": "us lot",
+                "is": "iz", "ben": "am", "are": "be",
+                "het": "the", "de": "the", "een": "a tidy",
+                "the": "the", "a": "a proper",
+                "naar": "down to", "to": "over to",
+                "met": "wiv", "with": "wiv",
+                "maar": "but-ty", "but": "however-mun",
+                "niet": "not", "no": "no way boyo",
+                "ja": "aye", "yes": "aye-aye butt",
+                "omdat": "coz", "because": "since-innit",
+                "nu": "now in a minute", "now": "now in a minute",
+                "gaan": "heading", "going": "goin'",
+                "doen": "doin'", "doing": "doin'",
+                "hebben": "havin'", "have": "got",
+                "altijd": "always-innit", "always": "constantly-mun",
+                "thanks": "diolch mush", "bedankt": "diolch butt"
             };
 
-            // Loop door de woordenlijst
-            // Let op: We moeten langere zinnen eerst doen (zoals 'niet lang' voor 'lang')
-            // Maar de regex \b lost dit meeste al op.
+            // Eerst de specifieke lange zinnen/woorden vervangen
             for (let [key, val] of Object.entries(dict)) {
                 let re = new RegExp("\\b" + key + "\\b", "gi");
                 text = text.replace(re, val);
             }
 
-            // De Welsh Finishers (Variatie maakt het leuker)
-            const finishers = [
-                ", isn't it, boyo?",
-                ", fairplay.",
-                ", to be honest with you, mun.",
-                ", simple as.",
-                ", ych a fi.",
-                ", you know what I mean, mush?",
-                ", proper lush."
-            ];
-            const randomFinish = finishers[Math.floor(Math.random() * finishers.length)];
+            // Fonetische extra's
+            text = text.replace(/ing\b/g, "in'");
+            text = text.replace(/er\b/g, "ah");
 
-            // Het Resultaat
-            const finalResult = text.charAt(0).toUpperCase() + text.slice(1) + randomFinish;
-            outputElement.innerText = finalResult;
+            // Random Welsh fillers per zin
+            const fillers = [" mun", " boyo", " isn't it", " fairplay", " simple as", " to be honest", " ych a fi"];
+            let sentences = text.trim().split('.');
+            text = sentences.map(s => {
+                if (s.trim().length < 5) return s;
+                let filler = fillers[Math.floor(Math.random() * fillers.length)];
+                return s.trim() + filler;
+            }).join('. ');
+
+            let finalResult = text.charAt(0).toUpperCase() + text.slice(1);
+            if (!finalResult.endsWith('.') && !finalResult.endsWith('?')) finalResult += ".";
+
+            document.getElementById('output').innerText = finalResult;
         }
 
         function shareWhatsApp() {
             const text = document.getElementById('output').innerText;
-            if (text && text !== "Resultaat verschijnt hier, boyo...") {
+            if (text && !text.includes("Wachtend")) {
                 const url = "https://wa.me/?text=" + encodeURIComponent(text);
                 window.open(url, '_blank');
             }
         }
     </script>
-
 </body>
 </html>
