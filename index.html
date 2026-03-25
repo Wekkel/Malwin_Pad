@@ -3,25 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welshizer</title>
+    <title>Malwinizer - Welsh Translator</title>
     <style>
-        body { font-family: sans-serif; padding: 20px; background: #d30731; color: white; text-align: center; }
-        textarea { width: 100%; height: 100px; margin-bottom: 10px; border-radius: 8px; border: none; padding: 10px; }
-        button { background: #00ad36; color: white; border: none; padding: 15px 30px; border-radius: 8px; font-weight: bold; cursor: pointer; }
-        .result { margin-top: 20px; background: white; color: black; padding: 15px; border-radius: 8px; min-height: 50px; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 20px; background: #d30731; color: white; text-align: center; }
+        .container { max-width: 500px; margin: 0 auto; background: rgba(0,0,0,0.1); padding: 20px; border-radius: 15px; }
+        textarea { width: 90%; height: 100px; margin-bottom: 10px; border-radius: 8px; border: 2px solid #00ad36; padding: 10px; font-size: 16px; }
+        button { background: #00ad36; color: white; border: none; padding: 15px 30px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 18px; width: 95%; margin-bottom: 10px; }
+        button:active { background: #008a2b; }
+        .result-box { margin-top: 20px; background: white; color: black; padding: 15px; border-radius: 8px; min-height: 50px; text-align: left; word-wrap: break-word; }
+        .wa-btn { background: #25D366; }
     </style>
 </head>
 <body>
-    <h1>🏴󠁧󠁢󠁷󠁬󠁳󠁿 Welshizer</h1>
-    <textarea id="input" placeholder="Typ je tekst (Engels/Nederlands)..."></textarea>
-    <br>
-    <button onclick="translate()">Maak het Plat Welsh</button>
-    <div class="result" id="output">Resultaat verschijnt hier...</div>
+    <div class="container">
+        <h1>🏴󠁧󠁢󠁷󠁬󠁳󠁿 Malwinizer</h1>
+        <p>Maak je tekst "Proper Welsh", isn't it?</p>
+        <textarea id="inputField" placeholder="Typ je tekst hier..."></textarea>
+        <br>
+        <button onclick="welshifyText()">Maak het Plat Welsh</button>
+        <button class="wa-btn" onclick="shareWhatsApp()">Deel in de Groep</button>
+        
+        <div class="result-box" id="outputField">Resultaat verschijnt hier...</div>
+    </div>
 
     <script>
         const dictionary = {
             "hello": "alright butt",
             "friend": "mush",
+            "mate": "boyo",
             "good": "tidy",
             "very good": "proper lush",
             "nice": "lush",
@@ -29,25 +38,42 @@
             "idiot": "daft ap",
             "disgusting": "ych a fi",
             "now": "now in a minute",
-            "coffee": "cup of tea",
             "yes": "aye",
-            "please": "please now",
-            "beer": "pints"
+            "beer": "pints",
+            "hallo": "alright butt",
+            "vriend": "boyo",
+            "lekker": "proper lush",
+            "bier": "pints",
+            "bedankt": "diolch, butt"
         };
 
-        function translate() {
-            let text = document.getElementById('input').value.toLowerCase();
+        function welshifyText() {
+            let text = document.getElementById('inputField').value.toLowerCase();
             
-            // Simpele vervanging
+            if (!text) {
+                document.getElementById('outputField').innerText = "Typ eerst wat, boyo!";
+                return;
+            }
+
+            // Vervang woorden op basis van de dictionary
             for (const [key, value] of Object.entries(dictionary)) {
-                let re = new RegExp(key, "g");
+                // Gebruik RegExp met \b voor hele woorden om foutieve vervangingen te voorkomen
+                let re = new RegExp("\\b" + key + "\\b", "gi");
                 text = text.replace(re, value);
             }
 
-            // Voeg de typische 'isn't it' of 'boyo' toe aan het eind
-            text = text + ", isn't it, boyo?";
+            // Voeg de verplichte Welsh afsluiting toe
+            text = text.charAt(0).toUpperCase() + text.slice(1) + ", isn't it, boyo?";
             
-            document.getElementById('output').innerText = text;
+            document.getElementById('outputField').innerText = text;
+        }
+
+        function shareWhatsApp() {
+            const text = document.getElementById('outputField').innerText;
+            if (text && text !== "Resultaat verschijnt hier...") {
+                const url = "https://wa.me/?text=" + encodeURIComponent(text);
+                window.open(url, '_blank');
+            }
         }
     </script>
 </body>
